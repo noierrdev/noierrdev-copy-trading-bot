@@ -2964,7 +2964,7 @@ const swapPumpfunFaster=async (connection, targetToken, bondingCurve,bondingCurv
   
   const txObject = new Transaction();
 
-  const solATA = await getAssociatedTokenAddress(
+  const solATA = await getAssociatedTokenAddressSync(
     SOL_MINT_PUBKEY,
     wallet.publicKey,
   );

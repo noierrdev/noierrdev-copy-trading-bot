@@ -107,10 +107,12 @@ function connectWebsocket(){
 
                 if(accountKeys.includes(BSD_CONTRACT)){
                     const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==BSD_CONTRACT);
+                    console.log(swapInstruction)
                     bondingCurve=swapInstruction.accounts[4];
                     bondingCurveVault=swapInstruction.accounts[5];
                 }else{
                     const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
+                    console.log(swapInstruction)
                     bondingCurve=swapInstruction.accounts[3];
                     bondingCurveVault=swapInstruction.accounts[4];
                 }
@@ -121,7 +123,7 @@ function connectWebsocket(){
                     
                 }else{
                     console.log(`::::SELL::::`);
-                    await pumpfunSwapTransactionFaster(connection,targetToken,0.1,false);
+                    await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
                 }
             }
 
