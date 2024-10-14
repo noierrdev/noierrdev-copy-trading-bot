@@ -2970,7 +2970,7 @@ const swapPumpfunFaster=async (connection, targetToken, bondingCurve,bondingCurv
   );
   const accountInfo = await connection.getAccountInfo(solATA);
   
-  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 10000}));
+  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 100000}));
   if (accountInfo) {
     txObject.add(
       createCloseAccountInstruction(
@@ -4626,8 +4626,8 @@ async function swapTokenAccounts(connection, tokenAddress, accounts,amount=0.000
   );
   
   if(buySol)
-    txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(30000)}));
-  else txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(30000)}));
+    txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(100000)}));
+  else txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(100000)}));
   const accountInfo = await connection.getAccountInfo(solATA);
   // if (accountInfo) {
   //   txObject.add(
@@ -4795,7 +4795,7 @@ async function swapTokenAccounts(connection, tokenAddress, accounts,amount=0.000
     "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
     "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
   ]
-  const jito_tip_amount=BigInt(Number(200000))
+  const jito_tip_amount=BigInt(Number(100000))
   const jito_tip_index=(Math.round(Math.random()*10))%8;
   const jito_tip_account=new PublicKey(jito_tip_accounts[jito_tip_index]);
   txObject.add(
