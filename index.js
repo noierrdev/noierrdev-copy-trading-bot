@@ -5,6 +5,7 @@ const fs=require('fs')
 const path=require('path')
 const WebSocket = require('ws');
 const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster } = require("./swap");
+const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
 const wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 console.log(wallets)
@@ -18,7 +19,8 @@ const SOL_MINT_ADDRESS = 'So11111111111111111111111111111111111111112';
 const RAYDIUM_AUTHORITY="5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1";
 const BSD_CONTRACT="BSfD6SHZigAfDWSjzD5Q41jw8LmKwtmjskPH9XW1mrRW"
 
-
+const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
+const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
 
 function connectWebsocket(){
     const ws = new WebSocket(process.env.RPC_WEBSOCKET);
@@ -123,7 +125,15 @@ function connectWebsocket(){
                     
                 }else{
                     console.log(`::::SELL::::`);
-                    await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
+                    // if((!userPostTokenBalance)||(userPostTokenBalance.uiTokenAmount.uiAmount==0)){
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
+                    // }else{
+                    //     const myTokenAccount=getAssociatedTokenAddressSync(new PublicKey(targetToken),wallet.publicKey);
+                    //     const myTokenBalance=await connection.getTokenAccountBalance(myTokenAccount);
+                    //     const tokenToSell=Number((myTokenBalance.value.uiAmount*(userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount)).toFixed(0));
+                    //     await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
+                    // }
+                    
                 }
             }
 
