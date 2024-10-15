@@ -103,44 +103,62 @@ function connectWebsocket(){
                 }
             }
             else if(accountKeys.includes(PUMPFUN_BONDINGCURVE)){
-
-                var bondingCurve=null;
-                var bondingCurveVault=null;
-
-                if(accountKeys.includes(BSD_CONTRACT)){
-                    const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==BSD_CONTRACT);
-                    console.log(swapInstruction)
-                    bondingCurve=swapInstruction.accounts[4];
-                    bondingCurveVault=swapInstruction.accounts[5];
-                }else{
-                    const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
-                    console.log(swapInstruction)
-                    bondingCurve=swapInstruction.accounts[3];
-                    bondingCurveVault=swapInstruction.accounts[4];
-                }
                 if(userTokenBalanceChange>0){
                     console.log(`::::BUY:::::`)
-                    const tokenToBuy=Math.floor(userTokenBalanceChange*((0.01*(10**9))/(0-SOLBalanceChange)))
-                    await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                    
-                }else{
-                    console.log(`::::SELL::::`);
-                    if((!userPostTokenBalance)||(userPostTokenBalance.uiTokenAmount.uiAmount==0)){
-                        await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
-                    }else{
-                        const myTokenAccount=getAssociatedTokenAddressSync(new PublicKey(targetToken),wallet.publicKey);
-                        try {
-                            const myTokenBalance=await connection.getTokenAccountBalance(myTokenAccount);
-                            const tokenToSell=Number((myTokenBalance.value.uiAmount*(userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount)).toFixed(0));
-                            await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
-                        } catch (error) {
-                            console.log(error)
-                            await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
-                        }
-                        
-                    }
+                    // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.01*(10**9))/(0-SOLBalanceChange)))
+                    await pumpfunSwapTransactionFaster(connection,targetToken,0.01,true);
+                }
+                else {
+                    console.log(`::::SELL:::::`)
+                    await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
                     
                 }
+                // var bondingCurve=null;
+                // var bondingCurveVault=null;
+
+                // if(accountKeys.includes(BSD_CONTRACT)){
+                //     const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==BSD_CONTRACT);
+                //     console.log(swapInstruction)
+                //     bondingCurve=swapInstruction.accounts[4];
+                //     bondingCurveVault=swapInstruction.accounts[5];
+                // }else{
+                //     const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
+                //     console.log(swapInstruction)
+                //     bondingCurve=swapInstruction?.accounts[3];
+                //     bondingCurveVault=swapInstruction?.accounts[4];
+                // }
+                // if(!bondingCurve||!bondingCurveVault){
+                //     if(userTokenBalanceChange>0){
+                //         console.log(`::::BUY:::::`)
+                //     }
+                //     else {
+                //         console.log(`::::SELL:::::`)
+                //     }
+                //     return;
+                // }
+                // if(userTokenBalanceChange>0){
+                //     console.log(`::::BUY:::::`)
+                //     const tokenToBuy=Math.floor(userTokenBalanceChange*((0.01*(10**9))/(0-SOLBalanceChange)))
+                //     await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                    
+                // }else{
+                //     console.log(`::::SELL::::`);
+                //     if((!userPostTokenBalance)||(userPostTokenBalance.uiTokenAmount.uiAmount==0)){
+                //         await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
+                //     }else{
+                //         const myTokenAccount=getAssociatedTokenAddressSync(new PublicKey(targetToken),wallet.publicKey);
+                //         try {
+                //             const myTokenBalance=await connection.getTokenAccountBalance(myTokenAccount);
+                //             const tokenToSell=Number((myTokenBalance.value.uiAmount*(userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount)).toFixed(0));
+                //             await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
+                //         } catch (error) {
+                //             console.log(error)
+                //             await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
+                //         }
+                        
+                //     }
+                    
+                // }
             }
 
             
