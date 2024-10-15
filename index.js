@@ -125,14 +125,19 @@ function connectWebsocket(){
                     
                 }else{
                     console.log(`::::SELL::::`);
-                    // if((!userPostTokenBalance)||(userPostTokenBalance.uiTokenAmount.uiAmount==0)){
+                    if((!userPostTokenBalance)||(userPostTokenBalance.uiTokenAmount.uiAmount==0)){
                         await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
-                    // }else{
-                    //     const myTokenAccount=getAssociatedTokenAddressSync(new PublicKey(targetToken),wallet.publicKey);
-                    //     const myTokenBalance=await connection.getTokenAccountBalance(myTokenAccount);
-                    //     const tokenToSell=Number((myTokenBalance.value.uiAmount*(userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount)).toFixed(0));
-                    //     await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
-                    // }
+                    }else{
+                        const myTokenAccount=getAssociatedTokenAddressSync(new PublicKey(targetToken),wallet.publicKey);
+                        try {
+                            const myTokenBalance=await connection.getTokenAccountBalance(myTokenAccount);
+                            const tokenToSell=Number((myTokenBalance.value.uiAmount*(userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount)).toFixed(0));
+                            await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
+                        } catch (error) {
+                            console.log(error)
+                        }
+                        
+                    }
                     
                 }
             }
