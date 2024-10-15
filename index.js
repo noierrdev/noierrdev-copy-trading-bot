@@ -135,6 +135,7 @@ function connectWebsocket(){
                             await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
                         } catch (error) {
                             console.log(error)
+                            await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
                         }
                         
                     }
