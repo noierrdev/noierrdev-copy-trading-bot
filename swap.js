@@ -3314,7 +3314,7 @@ const pumpfunSwapTransactionFaster=async (connection, tokenAddress,amount,buy)=>
           "denominatedInSol": buy?'true':'false',
           "amount": buy?String(amount):"100%",
           "slippage": 10, 
-          "priorityFee": 0.0001, 
+          "priorityFee": 0.0003, 
           "pool": "pump"
       })
   });
@@ -3336,7 +3336,7 @@ const pumpfunSwapTransactionFaster=async (connection, tokenAddress,amount,buy)=>
       "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
       "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
     ]
-    const jito_tip_amount=BigInt(Number(100000))
+    const jito_tip_amount=BigInt(Number(300000))
     const jito_tip_index=(Math.round(Math.random()*10))%8;
     const jito_tip_account=new PublicKey(jito_tip_accounts[jito_tip_index]);
     jitoTx.add(
@@ -4626,8 +4626,8 @@ async function swapTokenAccounts(connection, tokenAddress, accounts,amount=0.000
   );
   
   if(buySol)
-    txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(100000)}));
-  else txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(100000)}));
+    txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(300000)}));
+  else txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: Number(300000)}));
   const accountInfo = await connection.getAccountInfo(solATA);
   // if (accountInfo) {
   //   txObject.add(
@@ -4795,7 +4795,7 @@ async function swapTokenAccounts(connection, tokenAddress, accounts,amount=0.000
     "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
     "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
   ]
-  const jito_tip_amount=BigInt(Number(100000))
+  const jito_tip_amount=BigInt(Number(300000))
   const jito_tip_index=(Math.round(Math.random()*10))%8;
   const jito_tip_account=new PublicKey(jito_tip_accounts[jito_tip_index]);
   txObject.add(
