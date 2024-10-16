@@ -96,21 +96,21 @@ function connectWebsocket(){
                 }
                 if(userTokenBalanceChange>0){
                     console.log(`::::BUY:::::`)
-                    await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.1,false);
+                    await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
                 }else{
                     console.log(`::::SELL::::`);
-                    await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.1,true);
+                    await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
                 }
             }
             else if(accountKeys.includes(PUMPFUN_BONDINGCURVE)){
                 if(userTokenBalanceChange>0){
                     console.log(`::::BUY:::::`)
                     // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.01*(10**9))/(0-SOLBalanceChange)))
-                    await pumpfunSwapTransactionFaster(connection,targetToken,0.1,true);
+                    await pumpfunSwapTransactionFaster(connection,targetToken,0.06,true);
                 }
                 else {
                     console.log(`::::SELL:::::`)
-                    await pumpfunSwapTransactionFaster(connection,targetToken,0.1,false);
+                    await pumpfunSwapTransactionFaster(connection,targetToken,0.06,false);
                     
                 }
                 // var bondingCurve=null;
