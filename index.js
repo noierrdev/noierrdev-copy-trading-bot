@@ -23,7 +23,7 @@ const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
 
 function connectWebsocket(){
-    const ws = new WebSocket(process.env.RPC_WEBSOCKET);
+    var ws = new WebSocket(process.env.RPC_WEBSOCKET);
     function sendRequest(ws) {
         const request = {
             jsonrpc: "2.0",
@@ -174,11 +174,15 @@ function connectWebsocket(){
     
     ws.on('close', function close() {
         console.log('WebSocket is closed');
-        setTimeout(() => {
-            connectWebsocket()
-        }, 2000);
+        ws=null
+        setTimeout(async () => {
+            await connectWebsocket()
+        }, 500);
         
     });
+    setTimeout(() => {
+        ws.close();
+    }, 180000);
 }
 
 connectWebsocket()
