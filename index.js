@@ -177,7 +177,7 @@ function connectWebsocket(){
         ws=null
         setTimeout(async () => {
             await connectWebsocket()
-        }, 500);
+        }, 300);
         
     });
     setTimeout(() => {
