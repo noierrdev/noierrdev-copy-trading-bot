@@ -77,6 +77,7 @@ function connectWebsocket(){
             const userPreTokenBalance=result.transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
             const userPostTokenBalance=result.transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
             console.log({userPreTokenBalance,userPostTokenBalance})
+
             if((!userPreTokenBalance)&&(!userPostTokenBalance)) {
                 console.log("!!!!!===NOT SWAP TX===!!!!!");
                 return;
@@ -93,12 +94,12 @@ function connectWebsocket(){
             }
 
             if(accountKeys.includes(RAYDIUM_OPENBOOK_AMM)){
-                const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
-                console.log(swapInstruction)
-                if(!swapInstruction){
-                    console.log(`!!!NO SWAP INSTRUCTION!!!`)
-                    return;
-                }
+                // const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
+                // console.log(swapInstruction)
+                // if(!swapInstruction){
+                //     console.log(`!!!NO SWAP INSTRUCTION!!!`)
+                //     return;
+                // }
                 if(userTokenBalanceChange>0){
                     console.log(`::::BUY:::::`)
                     await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
