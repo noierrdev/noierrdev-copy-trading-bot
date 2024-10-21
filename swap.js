@@ -3021,9 +3021,19 @@ const swapPumpfunFaster=async (connection, targetToken, bondingCurve,bondingCurv
   const amountbuffer = Buffer.alloc(8);
   amountbuffer.writeBigInt64LE(BigInt(Number(amount)*(10**6)),0);
 
+  if(!buy){
+    try {
+      const myBalance=await connection.getTokenAccountBalance(tokenATA);
+      amountbuffer.writeBigInt64LE(BigInt(Math.floor(myBalance?.value?.amount)))
+    } catch (error) {
+    } 
+  }
+
   const solAmountbuffer = Buffer.alloc(8);
   solAmountbuffer.writeBigInt64LE(BigInt(10000000000),0);
   // console.log(amountbuffer.toString("hex"))
+
+  
 
   const contractInstruction=new TransactionInstruction({
     keys:[
