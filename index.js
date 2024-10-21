@@ -119,17 +119,37 @@ function connectWebsocket(){
                 }
             }
             else if(accountKeys.includes(PUMPFUN_BONDINGCURVE)){
-                if(userTokenBalanceChange>0){
-                    console.log(`::::BUY:::::`)
-                    const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                    await pumpfunSwapTransactionFaster(connection,targetToken,0.15,true);
-                    // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
+                
+                if(swapInstruction){
+                    var bondingCurve=null;
+                    var bondingCurveVault=null;
+                    bondingCurve=swapInstruction?.accounts[3];
+                    bondingCurveVault=swapInstruction?.accounts[4];
+                    if(userTokenBalanceChange>0){
+                        console.log(`::::BUY:::::`)
+                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                        await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                    }
+                    else {
+                        console.log(`::::SELL:::::`)
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
+                        
+                    }
+                }else{
+                    if(userTokenBalanceChange>0){
+                        console.log(`::::BUY:::::`)
+                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.15,true);
+                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                    }
+                    else {
+                        console.log(`::::SELL:::::`)
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
+                        
+                    }
                 }
-                else {
-                    console.log(`::::SELL:::::`)
-                    await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
-                    
-                }
+                
                 // var bondingCurve=null;
                 // var bondingCurveVault=null;
 
