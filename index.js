@@ -7,6 +7,8 @@ const WebSocket = require('ws');
 const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster } = require("./swap");
 const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
+const {Bot,Context,session}=require("grammy")
+
 const wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 console.log(wallets)
 
@@ -21,6 +23,9 @@ const BSD_CONTRACT="BSfD6SHZigAfDWSjzD5Q41jw8LmKwtmjskPH9XW1mrRW"
 
 const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
+
+const bot = new Bot(process.env.TELEGRAM_TOKEN);
+bot.start()
 
 function connectWebsocket(){
     var ws = new WebSocket(process.env.RPC_WEBSOCKET);
@@ -97,6 +102,7 @@ function connectWebsocket(){
                 if(userTokenBalanceChange>0){
                     console.log(`::::BUY:::::`)
                     await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
+                    await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                 }else{
                     console.log(`::::SELL::::`);
                     await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
@@ -107,6 +113,7 @@ function connectWebsocket(){
                     console.log(`::::BUY:::::`)
                     const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                     await pumpfunSwapTransactionFaster(connection,targetToken,0.1,true);
+                    await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                 }
                 else {
                     console.log(`::::SELL:::::`)
