@@ -128,7 +128,7 @@ function connectWebsocket(){
                     bondingCurveVault=swapInstruction?.accounts[4];
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
                         await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                     }
                     else {
