@@ -133,6 +133,7 @@ function connectWebsocket(){
                     }
                     else {
                         console.log(`::::SELL:::::`)
+                        await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,10000,false);
                         await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
                         
                     }
