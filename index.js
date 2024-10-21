@@ -4,10 +4,11 @@ const {Connection, PublicKey, Keypair}=require("@solana/web3.js")
 const fs=require('fs')
 const path=require('path')
 const WebSocket = require('ws');
-const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster } = require("./swap");
+const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest } = require("./swap");
 const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
-const {Bot,Context,session}=require("grammy")
+const {Bot,Context,session}=require("grammy");
+const { getSwapMarket, getSwapMarketFaster } = require("./utils");
 
 const wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 console.log(wallets)
@@ -94,19 +95,27 @@ function connectWebsocket(){
             }
 
             if(accountKeys.includes(RAYDIUM_OPENBOOK_AMM)){
-                // const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
-                // console.log(swapInstruction)
-                // if(!swapInstruction){
-                //     console.log(`!!!NO SWAP INSTRUCTION!!!`)
-                //     return;
-                // }
-                if(userTokenBalanceChange>0){
-                    console.log(`::::BUY:::::`)
-                    await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
-                    await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
+                console.log(swapInstruction)
+                if(swapInstruction){
+                    if(userTokenBalanceChange>0){
+                        console.log(`::::BUY:::::`)
+                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
+                        await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                    }else{
+                        console.log(`::::SELL::::`);
+                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
+                    }
                 }else{
-                    console.log(`::::SELL::::`);
-                    await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
+                    const swapMarket=await getSwapMarketFaster(connection,targetToken);
+                    if(userTokenBalanceChange>0){
+                        console.log(`::::BUY:::::`)
+                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.06,false);
+                        await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                    }else{
+                        console.log(`::::SELL::::`);
+                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.05,true)
+                    }
                 }
             }
             else if(accountKeys.includes(PUMPFUN_BONDINGCURVE)){
