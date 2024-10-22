@@ -133,14 +133,14 @@ function connectWebsocket(){
                     }
                     else {
                         console.log(`::::SELL:::::`)
-                        await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,10000,false);
+                        // await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,10000,false);
                         await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
                         
                     }
                 }else{
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                        // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                         await pumpfunSwapTransactionFaster(connection,targetToken,0.15,true);
                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }
