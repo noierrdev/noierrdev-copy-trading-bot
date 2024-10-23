@@ -1,9 +1,5 @@
-const { Keypair } = require("@solana/web3.js");
+const { pumpfunSwapTransactionFaster, pumpfunSwapTransaction } = require("./swap");
 
-require("dotenv").config()
-
-const PRIVATE_KEY = Uint8Array.from(JSON.parse(process.env.PRIVATE_KEY));
-
-const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
-
-console.log(wallet.publicKey.toBase58())
+setTimeout(async () => {
+    await pumpfunSwapTransaction("9Lzee8WAod9FA37gSTqj6DKYPaJwebtFMorgYr5vUY1A",0.01,false)
+}, 0);
