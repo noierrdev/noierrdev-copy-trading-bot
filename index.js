@@ -129,7 +129,7 @@ function connectWebsocket(){
                     bondingCurveVault=swapInstruction?.accounts[4];
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.18*(10**9))/(0-SOLBalanceChange)))
+                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                         await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                     }
                     else {
@@ -142,7 +142,7 @@ function connectWebsocket(){
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
                         // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                        await pumpfunSwapTransactionFaster(connection,targetToken,0.18,true);
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.1,true);
                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }
                     else {
