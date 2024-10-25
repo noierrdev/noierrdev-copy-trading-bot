@@ -9,6 +9,7 @@ const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
 const {Bot,Context,session}=require("grammy");
 const { getSwapMarket, getSwapMarketFaster } = require("./utils");
+const Client=require("@triton-one/yellowstone-grpc");
 
 const wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 console.log(wallets)
@@ -128,7 +129,7 @@ function connectWebsocket(){
                     bondingCurveVault=swapInstruction?.accounts[4];
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.18*(10**9))/(0-SOLBalanceChange)))
                         await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                     }
                     else {
@@ -141,7 +142,7 @@ function connectWebsocket(){
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
                         // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                        await pumpfunSwapTransactionFaster(connection,targetToken,0.1,true);
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.18,true);
                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }
                     else {
@@ -150,53 +151,6 @@ function connectWebsocket(){
                         
                     }
                 }
-                
-                // var bondingCurve=null;
-                // var bondingCurveVault=null;
-
-                // if(accountKeys.includes(BSD_CONTRACT)){
-                //     const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==BSD_CONTRACT);
-                //     console.log(swapInstruction)
-                //     bondingCurve=swapInstruction.accounts[4];
-                //     bondingCurveVault=swapInstruction.accounts[5];
-                // }else{
-                //     const swapInstruction=(result.transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
-                //     console.log(swapInstruction)
-                //     bondingCurve=swapInstruction?.accounts[3];
-                //     bondingCurveVault=swapInstruction?.accounts[4];
-                // }
-                // if(!bondingCurve||!bondingCurveVault){
-                //     if(userTokenBalanceChange>0){
-                //         console.log(`::::BUY:::::`)
-                //     }
-                //     else {
-                //         console.log(`::::SELL:::::`)
-                //     }
-                //     return;
-                // }
-                // if(userTokenBalanceChange>0){
-                //     console.log(`::::BUY:::::`)
-                //     const tokenToBuy=Math.floor(userTokenBalanceChange*((0.01*(10**9))/(0-SOLBalanceChange)))
-                //     await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                    
-                // }else{
-                //     console.log(`::::SELL::::`);
-                //     if((!userPostTokenBalance)||(userPostTokenBalance.uiTokenAmount.uiAmount==0)){
-                //         await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
-                //     }else{
-                //         const myTokenAccount=getAssociatedTokenAddressSync(new PublicKey(targetToken),wallet.publicKey);
-                //         try {
-                //             const myTokenBalance=await connection.getTokenAccountBalance(myTokenAccount);
-                //             const tokenToSell=Number((myTokenBalance.value.uiAmount*(userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount)).toFixed(0));
-                //             await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToSell,false)
-                //         } catch (error) {
-                //             console.log(error)
-                //             await pumpfunSwapTransactionFaster(connection,targetToken,0.01,false);
-                //         }
-                        
-                //     }
-                    
-                // }
             }
 
             
@@ -224,3 +178,75 @@ function connectWebsocket(){
 }
 
 connectWebsocket()
+
+
+function connectGeyser(){
+    const client =new Client.default("http://grpc.solanavibestation.com:10000/",undefined,undefined);
+    client.getVersion()
+    .then(async version=>{
+        try {
+            console.log(version)
+            const request =Client.SubscribeRequest.fromJSON({
+                accounts: {},
+                slots: {},
+                transactions: {
+                    pumpfun: {
+                        vote: false,
+                        failed: false,
+                        signature: undefined,
+                        accountInclude: [wallets],
+                        accountExclude: [],
+                        accountRequired: [],
+                    },
+                },
+                transactionsStatus: {},
+                entry: {},
+                blocks: {},
+                blocksMeta: {},
+                accountsDataSlice: [],
+                ping: undefined,
+                commitment: Client.CommitmentLevel.PROCESSED
+            })
+        
+            const stream =await client.subscribe();
+            stream.on("data", async (data) => {
+                if(data.transaction&&data.transaction.transaction&&data.transaction.transaction.signature) {
+                        const transaction=data.transaction.transaction;
+                        const sig=bs58.encode(data.transaction.transaction.signature)
+                        console.log(`https://solscan.io/tx/${sig}`)
+                        const allAccounts=[];
+                        transaction.transaction.message.accountKeys.map((account,index)=>{
+                            if(!account) return;
+                            const accountID=bs58.encode(account);
+                            allAccounts.push(accountID);
+                        })
+                        if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
+
+                        }
+
+
+                }
+            });
+            await new Promise((resolve, reject) => {
+                stream.write(request, (err) => {
+                    if (err === null || err === undefined) {
+                    resolve();
+                    } else {
+                    reject(err);
+                    }
+                });
+            }).catch((reason) => {
+                console.error(reason);
+                throw reason;
+            });
+        } catch (error) {
+            console.log(error)
+            console.log("RECONNECTING!!!")
+            setTimeout(() => {
+                connectGeyser()
+            }, 2000);
+            
+        }
+
+    });
+}
