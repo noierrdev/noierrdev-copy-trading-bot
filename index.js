@@ -101,21 +101,21 @@ function connectWebsocket(){
                 if(swapInstruction){
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
+                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.1,false);
                         await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }else{
                         console.log(`::::SELL::::`);
-                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
+                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.1,true);
                     }
                 }else{
                     const swapMarket=await getSwapMarketFaster(connection,targetToken);
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.06,false);
+                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.1,false);
                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }else{
                         console.log(`::::SELL::::`);
-                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.05,true)
+                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.1,true)
                     }
                 }
             }
@@ -230,7 +230,80 @@ function connectGeyser(){
                             console.log({WSOLBalChange})
                             const userPreTokenBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
-                            console.log({userPreTokenBalance,userPostTokenBalance})
+                            console.log({userPreTokenBalance,userPostTokenBalance});
+
+                            if((!userPreTokenBalance)&&(!userPostTokenBalance)) {
+                                console.log("!!!!!===NOT SWAP TX===!!!!!");
+                                return;
+                            }
+                            
+                            const targetToken=userPreTokenBalance?userPreTokenBalance.mint:userPostTokenBalance.mint;
+                            console.log({targetToken})
+                
+                            const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0);
+                            console.log(userTokenBalanceChange)
+                
+                            if(userTokenBalanceChange==0){
+                                console.log(":::!!!NOT SWAPPING!!!:::")
+                            }
+                
+                            if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
+                                const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
+                                console.log(swapInstruction)
+                                if(swapInstruction){
+                                    if(userTokenBalanceChange>0){
+                                        console.log(`::::BUY:::::`)
+                                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
+                                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                                    }else{
+                                        console.log(`::::SELL::::`);
+                                        await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
+                                    }
+                                }else{
+                                    const swapMarket=await getSwapMarketFaster(connection,targetToken);
+                                    if(userTokenBalanceChange>0){
+                                        console.log(`::::BUY:::::`)
+                                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.06,false);
+                                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                                    }else{
+                                        console.log(`::::SELL::::`);
+                                        await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.05,true)
+                                    }
+                                }
+                            }
+                            else if(accountKeys.includes(PUMPFUN_BONDINGCURVE)){
+                                const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
+                                
+                                if(swapInstruction){
+                                    var bondingCurve=null;
+                                    var bondingCurveVault=null;
+                                    bondingCurve=swapInstruction?.accounts[3];
+                                    bondingCurveVault=swapInstruction?.accounts[4];
+                                    if(userTokenBalanceChange>0){
+                                        console.log(`::::BUY:::::`)
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.001*(10**9))/(0-SOLBalanceChange)))
+                                        await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                    }
+                                    else {
+                                        console.log(`::::SELL:::::`)
+                                        // await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,10000,false);
+                                        await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
+                                        
+                                    }
+                                }else{
+                                    if(userTokenBalanceChange>0){
+                                        console.log(`::::BUY:::::`)
+                                        // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                                        await pumpfunSwapTransactionFaster(connection,targetToken,0.001,true);
+                                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
+                                    }
+                                    else {
+                                        console.log(`::::SELL:::::`)
+                                        await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
+                                        
+                                    }
+                                }
+                            }
 
                         }
 
