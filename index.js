@@ -129,7 +129,7 @@ function connectWebsocket(){
                     bondingCurveVault=swapInstruction?.accounts[4];
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
-                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
                         await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                     }
                     else {
@@ -142,7 +142,7 @@ function connectWebsocket(){
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
                         // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                        await pumpfunSwapTransactionFaster(connection,targetToken,0.1,true);
+                        await pumpfunSwapTransactionFaster(connection,targetToken,0.15,true);
                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }
                     else {
@@ -221,6 +221,16 @@ function connectGeyser(){
                             allAccounts.push(accountID);
                         })
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
+
+                            const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
+                            console.log({SOLBalanceChange})
+                            const userPreWSOLBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
+                            const userPostWSOLBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
+                            const WSOLBalChange=userPostWSOLBalance?(userPostWSOLBalance.uiTokenAmount.uiAmount-(userPreWSOLBalance?userPreWSOLBalance.uiTokenAmount.uiAmount:0)):(0-userPreWSOLBalance?userPreWSOLBalance.uiTokenAmount.uiAmount:0);
+                            console.log({WSOLBalChange})
+                            const userPreTokenBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
+                            const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
+                            console.log({userPreTokenBalance,userPostTokenBalance})
 
                         }
 
