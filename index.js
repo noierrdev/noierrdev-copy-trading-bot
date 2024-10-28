@@ -38,7 +38,7 @@ function connectWebsocket(){
             method: "transactionSubscribe",
             params: [
                 {   failed: false,
-                    accountInclude:    wallets
+                    accountInclude: [PUMPFUN_BONDINGCURVE,RAYDIUM_OPENBOOK_AMM]
                 },
                 {
                     commitment: "processed",
@@ -64,12 +64,20 @@ function connectWebsocket(){
             const messageObj = JSON.parse(messageStr);
     
             const result = messageObj.params.result;
-            const logs = result.transaction.meta.logMessages;
+            
             const signature = result.signature; // Extract the signature
-            console.log(`https://solscan.io/tx/${signature}`)
+            
             const accountKeys = result.transaction.transaction.message.accountKeys.map(ak => ak.pubkey);
-            const signers=result.transaction.transaction.message.accountKeys.filter(ak=>ak.signer==true).map(ak=>ak.pubkey);
 
+            var listed=false;
+            const signers=result.transaction.transaction.message.accountKeys.filter(ak=>ak.signer==true).map(ak=>{
+                if(wallets.includes(ak.pubkey)) listed=true;
+                return ak.pubkey
+            });
+
+            if(!listed) return;
+
+            console.log(`https://solscan.io/tx/${signature}`)
             const SOLBalanceChange=result.transaction.meta.postBalances[0]-result.transaction.meta.preBalances[0]
             console.log({SOLBalanceChange})
             const userPreWSOLBalance=result.transaction.meta.preTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
