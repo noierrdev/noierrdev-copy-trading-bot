@@ -203,7 +203,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [wallets],
+                        accountInclude: [RAYDIUM_OPENBOOK_AMM,PUMPFUN_BONDINGCURVE],
                         accountExclude: [],
                         accountRequired: [],
                     },
@@ -224,11 +224,15 @@ function connectGeyser(){
                         const sig=bs58.encode(data.transaction.transaction.signature)
                         console.log(`https://solscan.io/tx/${sig}`)
                         const allAccounts=[];
+                        var detected=false;
                         transaction.transaction.message.accountKeys.map((account,index)=>{
                             if(!account) return;
                             const accountID=bs58.encode(account);
+                            if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
+                        if(!detected) return;
+                        const signers=[allAccounts[0]]
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
 
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
