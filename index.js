@@ -235,6 +235,7 @@ function connectGeyser(){
                         // if(!detected) return;
                         const signers=[allAccounts[0]]
                         console.log(`https://solscan.io/tx/${sig}`)
+                        console.log(allAccounts)
                         for(var innerIns of transaction.meta.innerInstructions){
                             console.log(innerIns.instructions)
                         }
