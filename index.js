@@ -205,7 +205,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [PUMPFUN_BONDINGCURVE],
+                        accountInclude: [MINT_CONTRACT],
                         accountExclude: [],
                         accountRequired: [],
                     },
