@@ -205,7 +205,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [MINT_CONTRACT],
+                        accountInclude: [MINT_CONTRACT,PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM],
                         accountExclude: [],
                         accountRequired: [],
                     },
@@ -244,18 +244,14 @@ function connectGeyser(){
                             if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
-                        // if(!detected) return;
+                        if(!detected) return;
                         const signers=[allAccounts[0]]
-
-                        console.log(`https://solscan.io/tx/${sig}`)
-                        console.log(allAccounts)
 
                         for(var innerIns of transaction.meta.innerInstructions){
                             console.log(innerIns.instructions)
                         }
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                             
-                            return;
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
                             console.log({SOLBalanceChange})
                             const userPreWSOLBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
