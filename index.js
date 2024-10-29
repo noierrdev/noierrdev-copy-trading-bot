@@ -232,7 +232,7 @@ function connectGeyser(){
                             if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
-                        if(!detected) return;
+                        // if(!detected) return;
                         const signers=[allAccounts[0]]
                         console.log(`https://solscan.io/tx/${sig}`)
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
