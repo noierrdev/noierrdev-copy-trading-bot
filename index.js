@@ -235,7 +235,7 @@ function connectGeyser(){
                         // if(!detected) return;
                         const signers=[allAccounts[0]]
                         console.log(`https://solscan.io/tx/${sig}`)
-                        console.log(transaction)
+                        console.log(transaction.meta.innerInstructions)
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                             
                             return;
