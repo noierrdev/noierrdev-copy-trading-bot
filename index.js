@@ -4,7 +4,7 @@ const {Connection, PublicKey, Keypair}=require("@solana/web3.js")
 const fs=require('fs')
 const path=require('path')
 const WebSocket = require('ws');
-const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet } = require("./swap");
+const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet, swapPumpfunFasterWallet } = require("./swap");
 const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
 const {Bot,Context,session}=require("grammy");
@@ -304,9 +304,9 @@ function connectGeyser(){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.001*(10**9))/(0-SOLBalanceChange)))
-                                        // await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.001,true);
-                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,true)
+                                        // await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,true)
                                     }
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
