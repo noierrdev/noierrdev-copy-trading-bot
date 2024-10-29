@@ -244,12 +244,9 @@ function connectGeyser(){
                             if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
+
                         if(!detected) return;
                         const signers=[allAccounts[0]]
-
-                        for(var innerIns of transaction.meta.innerInstructions){
-                            console.log(innerIns.instructions)
-                        }
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                             
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
