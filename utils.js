@@ -3,6 +3,12 @@ const { Connection, PublicKey, Keypair, Transaction, SystemProgram, ComputeBudge
 const { TOKEN_PROGRAM_ID, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createCloseAccountInstruction, createSyncNativeInstruction, getAssociatedTokenAddressSync} = require('@solana/spl-token');
 const {  LIQUIDITY_STATE_LAYOUT_V4, Liquidity,MARKET_STATE_LAYOUT_V3,Market,poolKeys2JsonInfo} = require('@raydium-io/raydium-sdk');
 
+const PUMPFUN_RAYDIUM_MIGRATION="39azUYFWPz3VHgKCf3VChUwbpURdCHRxjWVowf5jUJjg"
+const RAYDIUM_OPENBOOK_AMM="675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8"
+const PUMPFUN_BONDINGCURVE="6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+const SOL_MINT_ADDRESS = 'So11111111111111111111111111111111111111112';
+const RAYDIUM_AUTHORITY="5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1";
+
 const getJupiterPrice=async (tokenAddress)=>{
     const response=await fetch(`${process.env.JUPITER_URL}/quote?inputMint=${tokenAddress}&outputMint=So11111111111111111111111111111111111111112&amount=1000000000`,{
         method:"GET"
@@ -162,8 +168,8 @@ const getSwapMarketFaster=async (connection,tokenAddress)=>{
 
   const SOL_MINT_ADDRESS = 'So11111111111111111111111111111111111111112';
   const TOKEN_MINT_ADDRESS = tokenAddress; // Replace with your token's mint address
-  const raydium_program_id=new PublicKey(process.env.RAYDIUM_OPENBOOK_AMM);
-  const raydium_auth=new PublicKey(process.env.RAYDIUM_AUTHORITY);
+  const raydium_program_id=new PublicKey(RAYDIUM_OPENBOOK_AMM);
+  const raydium_auth=new PublicKey(RAYDIUM_AUTHORITY);
   var accounts=await connection.getProgramAccounts(
       raydium_program_id,
       {
@@ -258,8 +264,80 @@ const getSwapMarketRapid=async (tokenAddress,quoted)=>{
 
   const SOL_MINT_ADDRESS = 'So11111111111111111111111111111111111111112';
   const TOKEN_MINT_ADDRESS = tokenAddress; // Replace with your token's mint address
-  const raydium_program_id=new PublicKey(process.env.RAYDIUM_OPENBOOK_AMM);
-  const raydium_auth=new PublicKey(process.env.RAYDIUM_AUTHORITY);
+  const raydium_program_id=new PublicKey(RAYDIUM_OPENBOOK_AMM);
+  const raydium_auth=new PublicKey(RAYDIUM_AUTHORITY);
+  var accounts=await connection.getProgramAccounts(
+      raydium_program_id,
+      {
+        commitment: "processed",
+        filters: [
+          { dataSize: LIQUIDITY_STATE_LAYOUT_V4.span },
+          {
+            memcmp: {
+              offset: LIQUIDITY_STATE_LAYOUT_V4.offsetOf('baseMint'),
+              bytes: quoted?SOL_MINT_ADDRESS:TOKEN_MINT_ADDRESS,
+            },
+          },
+          {
+            memcmp: {
+              offset: LIQUIDITY_STATE_LAYOUT_V4.offsetOf('quoteMint'),
+              bytes: quoted?TOKEN_MINT_ADDRESS:SOL_MINT_ADDRESS,
+            },
+          },
+        ],
+      },
+  );
+  if(!accounts[0]) {
+    console.log("NO ACCOUNTS!!!");
+    return null;
+  }
+  const poolInfo=LIQUIDITY_STATE_LAYOUT_V4.decode(accounts[0].account.data);
+  const marketAccountInfo = await connection.getAccountInfo(poolInfo.marketId);
+  if (!marketAccountInfo) {
+      return false;
+  }
+  const marketInfo= MARKET_STATE_LAYOUT_V3.decode(marketAccountInfo.data);
+  const poolKeys = {
+      poolId: accounts[0].pubkey,
+      baseMint: poolInfo.baseMint,
+      quoteMint: poolInfo.quoteMint,
+      lpMint: poolInfo.lpMint,
+      baseDecimals: poolInfo.baseDecimal.toNumber(),
+      quoteDecimals: poolInfo.quoteDecimal.toNumber(),
+      lpDecimals: 9,
+      version: 4,
+      programId: raydium_program_id,
+      openOrders: poolInfo.openOrders,
+      targetOrders: poolInfo.targetOrders,
+      baseVault: poolInfo.baseVault,
+      quoteVault: poolInfo.quoteVault,
+      withdrawQueue: poolInfo.withdrawQueue,
+      lpVault: poolInfo.lpVault,
+      marketVersion: 3,
+      authority: raydium_auth,
+      marketId: poolInfo.marketId,
+      marketProgramId: poolInfo.marketProgramId,
+      marketAuthority: Market.getAssociatedAuthority({ programId: poolInfo.marketProgramId, marketId: poolInfo.marketId }).publicKey,
+      marketBaseVault: marketInfo.baseVault,
+      marketQuoteVault: marketInfo.quoteVault,
+      marketBids: marketInfo.bids,
+      marketAsks: marketInfo.asks,
+      marketEventQueue: marketInfo.eventQueue,
+  };
+
+  const id = poolKeys.poolId;
+  delete poolKeys.poolId;
+  poolKeys.id = id;
+  return {poolInfo,marketInfo,poolKeys};
+}
+
+const getSwapMarketFastest=async (connection, tokenAddress,quoted)=>{
+  // const connection = new Connection(process.env.RPC_API);
+
+  const SOL_MINT_ADDRESS = 'So11111111111111111111111111111111111111112';
+  const TOKEN_MINT_ADDRESS = tokenAddress; // Replace with your token's mint address
+  const raydium_program_id=new PublicKey(RAYDIUM_OPENBOOK_AMM);
+  const raydium_auth=new PublicKey(RAYDIUM_AUTHORITY);
   var accounts=await connection.getProgramAccounts(
       raydium_program_id,
       {
@@ -434,5 +512,6 @@ module.exports={
     getBirdeyePrice,
     getTokenAsset,
     pumpfunSwapTransaction,
-    getSwapMarketFaster
+    getSwapMarketFaster,
+    getSwapMarketFastest
 }
