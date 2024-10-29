@@ -23,6 +23,7 @@ const PUMPFUN_BONDINGCURVE="6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
 const SOL_MINT_ADDRESS = 'So11111111111111111111111111111111111111112';
 const RAYDIUM_AUTHORITY="5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1";
 const BSD_CONTRACT="BSfD6SHZigAfDWSjzD5Q41jw8LmKwtmjskPH9XW1mrRW"
+const MINT_CONTRACT="minTcHYRLVPubRK8nt6sqe2ZpWrGDLQoNLipDJCGocY"
 
 const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
@@ -204,7 +205,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [RAYDIUM_OPENBOOK_AMM,PUMPFUN_BONDINGCURVE,"minTcHYRLVPubRK8nt6sqe2ZpWrGDLQoNLipDJCGocY"],
+                        accountInclude: [MINT_CONTRACT],
                         accountExclude: [],
                         accountRequired: [],
                     },
@@ -234,7 +235,8 @@ function connectGeyser(){
                         if(!detected) return;
                         const signers=[allAccounts[0]]
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
-
+                            console.log(`https://solscan.io/tx/${sig}`)
+                            return;
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
                             console.log({SOLBalanceChange})
                             const userPreWSOLBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
