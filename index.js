@@ -205,7 +205,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [MINT_CONTRACT,PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM],
+                        accountInclude: [PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM],
                         accountExclude: [],
                         accountRequired: [],
                     },
@@ -235,13 +235,13 @@ function connectGeyser(){
                         transaction.meta.loadedWritableAddresses.map((account,index)=>{
                             if(!account) return;
                             const accountID=bs58.encode(account);
-                            if((!detected)&&wallets.includes(accountID)) detected=true;
+                            // if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
                         transaction.meta.loadedReadonlyAddresses.map((account,index)=>{
                             if(!account) return;
                             const accountID=bs58.encode(account);
-                            if((!detected)&&wallets.includes(accountID)) detected=true;
+                            // if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
 
@@ -250,28 +250,28 @@ function connectGeyser(){
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                             
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
-                            console.log({SOLBalanceChange})
+                            // console.log({SOLBalanceChange})
                             const userPreWSOLBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const userPostWSOLBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const WSOLBalChange=userPostWSOLBalance?(userPostWSOLBalance.uiTokenAmount.uiAmount-(userPreWSOLBalance?userPreWSOLBalance.uiTokenAmount.uiAmount:0)):(0-userPreWSOLBalance?userPreWSOLBalance.uiTokenAmount.uiAmount:0);
-                            console.log({WSOLBalChange})
+                            // console.log({WSOLBalChange})
                             const userPreTokenBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
-                            console.log({userPreTokenBalance,userPostTokenBalance});
+                            // console.log({userPreTokenBalance,userPostTokenBalance});
 
                             if((!userPreTokenBalance)&&(!userPostTokenBalance)) {
-                                console.log("!!!!!===NOT SWAP TX===!!!!!");
+                                // console.log("!!!!!===NOT SWAP TX===!!!!!");
                                 return;
                             }
                             
                             const targetToken=userPreTokenBalance?userPreTokenBalance.mint:userPostTokenBalance.mint;
-                            console.log({targetToken})
+                            // console.log({targetToken})
                 
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0);
-                            console.log(userTokenBalanceChange)
+                            // console.log(userTokenBalanceChange)
                 
                             if(userTokenBalanceChange==0){
-                                console.log(":::!!!NOT SWAPPING!!!:::")
+                                // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
