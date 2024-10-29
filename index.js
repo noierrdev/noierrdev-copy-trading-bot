@@ -10,6 +10,7 @@ const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 const {Bot,Context,session}=require("grammy");
 const { getSwapMarket, getSwapMarketFaster } = require("./utils");
 const Client=require("@triton-one/yellowstone-grpc");
+const bs58=require("bs58")
 
 const wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 console.log(wallets)
