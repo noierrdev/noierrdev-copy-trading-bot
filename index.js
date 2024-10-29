@@ -258,8 +258,9 @@ function connectGeyser(){
                         })
                         if(!detected) return;
                         const signers=[allAccounts[0]]
+                        console.log(`https://solscan.io/tx/${sig}`)
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
-                            console.log(`https://solscan.io/tx/${sig}`)
+                            
                             return;
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
                             console.log({SOLBalanceChange})
