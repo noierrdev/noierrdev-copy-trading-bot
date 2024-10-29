@@ -223,7 +223,6 @@ function connectGeyser(){
                 if(data.transaction&&data.transaction.transaction&&data.transaction.transaction.signature) {
                         const transaction=data.transaction.transaction;
                         const sig=bs58.encode(data.transaction.transaction.signature)
-                        console.log(`https://solscan.io/tx/${sig}`)
                         const allAccounts=[];
                         var detected=false;
                         transaction.transaction.message.accountKeys.map((account,index)=>{
@@ -266,20 +265,24 @@ function connectGeyser(){
                                 console.log(swapInstruction)
                                 if(swapInstruction){
                                     if(userTokenBalanceChange>0){
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         // await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,false);
                                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }else{
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
                                         // await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.06,true);
                                     }
                                 }else{
                                     const swapMarket=await getSwapMarketFaster(connection,targetToken);
                                     if(userTokenBalanceChange>0){
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         // await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.06,false);
                                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }else{
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
                                         // await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.05,true)
                                     }
@@ -294,11 +297,13 @@ function connectGeyser(){
                                     bondingCurve=swapInstruction?.accounts[3];
                                     bondingCurveVault=swapInstruction?.accounts[4];
                                     if(userTokenBalanceChange>0){
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.001*(10**9))/(0-SOLBalanceChange)))
                                         // await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                     }
                                     else {
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
                                         // await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,10000,false);
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
@@ -306,12 +311,14 @@ function connectGeyser(){
                                     }
                                 }else{
                                     if(userTokenBalanceChange>0){
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.001,true);
                                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }
                                     else {
+                                        console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.15,false);
                                         
