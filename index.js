@@ -188,7 +188,7 @@ function connectWebsocket(){
     }, 180000);
 }
 
-connectWebsocket()
+// connectWebsocket()
 
 
 function connectGeyser(){
@@ -378,4 +378,4 @@ function connectGeyser(){
     });
 }
 
-// connectGeyser()
+connectGeyser()
