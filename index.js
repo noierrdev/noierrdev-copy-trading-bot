@@ -12,13 +12,6 @@ const { getSwapMarket, getSwapMarketFaster } = require("./utils");
 const Client=require("@triton-one/yellowstone-grpc");
 const bs58=require("bs58")
 
-var wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
-console.log(wallets)
-setInterval(() => {
-    wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
-    console.log(`Wallets update`)
-    console.log(wallets)
-}, 2000);
 
 const connection=new Connection(process.env.RPC_API);
 
@@ -55,7 +48,6 @@ function connectWebsocket(){
                 }
             ]
         };
-        if(wallets.length==0) return;
         ws.send(JSON.stringify(request));
     }
     
@@ -78,7 +70,7 @@ function connectWebsocket(){
 
             var listed=false;
             const signers=result.transaction.transaction.message.accountKeys.filter(ak=>ak.signer==true).map(ak=>{
-                if(wallets.includes(ak.pubkey)) listed=true;
+                if((!listed)&&fs.existsSync(path.resolve(__dirname,"wallets",ak.pubkey))) listed=true;
                 return ak.pubkey
             });
 
@@ -234,19 +226,17 @@ function connectGeyser(){
                         transaction.transaction.message.accountKeys.map((account,index)=>{
                             if(!account) return;
                             const accountID=bs58.encode(account);
-                            if((!detected)&&wallets.includes(accountID)) detected=true;
+                            if((!detected)&&fs.existsSync(path.resolve(__dirname,"wallets",accountID))) detected=true;
                             allAccounts.push(accountID);
                         })
                         transaction.meta.loadedWritableAddresses.map((account,index)=>{
                             if(!account) return;
                             const accountID=bs58.encode(account);
-                            // if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
                         transaction.meta.loadedReadonlyAddresses.map((account,index)=>{
                             if(!account) return;
                             const accountID=bs58.encode(account);
-                            // if((!detected)&&wallets.includes(accountID)) detected=true;
                             allAccounts.push(accountID);
                         })
 
