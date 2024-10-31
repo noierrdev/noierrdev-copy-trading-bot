@@ -4,7 +4,7 @@ const {Connection, PublicKey, Keypair}=require("@solana/web3.js")
 const fs=require('fs')
 const path=require('path')
 const WebSocket = require('ws');
-const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet, swapPumpfunFasterWallet } = require("./swap");
+const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet, swapPumpfunFasterWallet, pumpfunSwapTransactionFasterWalletToken } = require("./swap");
 const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
 const {Bot,Context,session}=require("grammy");
@@ -269,7 +269,8 @@ function connectGeyser(){
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0);
                             console.log(userTokenBalanceChange)
                 
-                            if(userTokenBalanceChange==0){
+                            if(Math.abs(userTokenBalanceChange)<600000){
+                                return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
                 
@@ -316,33 +317,33 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.001*(10**9))/(0-SOLBalanceChange)))
-                                        // await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                                        await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.001,true);
-                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,true)
+                                        // await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,true)
                                     }
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
                                         // await swapPumpfunFaster(connection,targetToken,bondingCurve,bondingCurveVault,10000,false);
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.001,false);
-                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,false);
+                                        await swapPumpfunFasterWallet(connection,wallet,targetToken,0.1,false);
                                         
                                     }
                                 }else{
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.001,true);
-                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,true);
+                                        await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
                                         // await pumpfunSwapTransactionFaster(connection,targetToken,0.001,false);
-                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.1,false);
+                                        await swapPumpfunFasterWallet(connection,wallet,targetToken,0.1,false);
                                         
                                     }
                                 }
