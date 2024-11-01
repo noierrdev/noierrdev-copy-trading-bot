@@ -13,6 +13,6 @@ const bondingCurveVault="5masFP6hcRRaqYp92pGkGi8zQj1WSxXZj9iVg8vP1kcT"
 
 setTimeout(async () => {
     // await pumpfunSwapTransactionFasterWalletToken(connection,wallet,"4RXLAJQHhznjNaa4Auep3u1rA5XeKz4Ht2KWVf8ku2NK",100000,true)
-    await swapPumpfunFasterWalletStaked(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,100,true)
+    await swapPumpfunFasterWalletStaked(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false)
     // await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false)
 }, 0);
