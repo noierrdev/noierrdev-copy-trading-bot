@@ -4,7 +4,7 @@ const {Connection, PublicKey, Keypair}=require("@solana/web3.js")
 const fs=require('fs')
 const path=require('path')
 const WebSocket = require('ws');
-const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet, swapPumpfunFasterWallet, pumpfunSwapTransactionFasterWalletToken } = require("./swap");
+const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet, swapPumpfunFasterWallet, pumpfunSwapTransactionFasterWalletToken, pumpfunSwapTransactionFasterWalletStaked, swapPumpfunFasterWalletStaked } = require("./swap");
 const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
 const {Bot,Context,session}=require("grammy");
@@ -18,6 +18,7 @@ setInterval(() => {
 }, 2000);
 
 const connection=new Connection(process.env.RPC_API);
+const stakedConnectioon=new Connection(process.env.STAKED_RPC)
 
 const PUMPFUN_RAYDIUM_MIGRATION="39azUYFWPz3VHgKCf3VChUwbpURdCHRxjWVowf5jUJjg"
 const RAYDIUM_OPENBOOK_AMM="675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8"
@@ -327,6 +328,7 @@ function connectGeyser(){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
                                         await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false);
+                                        await swapPumpfunFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,false)
                                         
                                     }
                                 }else{
@@ -342,7 +344,8 @@ function connectGeyser(){
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
-                                        await pumpfunSwapTransactionFaster(connection,targetToken,0.001,false);
+                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
+                                        await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
                                         
                                     }
                                 }
