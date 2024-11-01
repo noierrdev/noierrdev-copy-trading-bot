@@ -207,7 +207,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM],
+                        accountInclude: [PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM,BSD_CONTRACT],
                         accountExclude: [],
                         accountRequired: [],
                     },
