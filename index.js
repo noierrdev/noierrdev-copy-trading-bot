@@ -274,6 +274,10 @@ function connectGeyser(){
                                 return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
+                            if(Math.abs(userTokenBalanceChange)<5000000){
+                                return;
+                                // console.log(":::!!!NOT SWAPPING!!!:::")
+                            }
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                                 const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
