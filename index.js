@@ -318,7 +318,7 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                                         var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
@@ -335,7 +335,7 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                                         var result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
