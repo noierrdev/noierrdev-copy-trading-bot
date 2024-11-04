@@ -277,7 +277,6 @@ function connectGeyser(){
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                                 const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
-                                console.log(swapInstruction)
                                 if(swapInstruction){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
@@ -297,13 +296,13 @@ function connectGeyser(){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         // await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.001,false);
-                                        await swapTokenFastestWallet(connection,wallet,swapMarket.poolKeys, 0.1,false)
+                                        await swapTokenFastestWallet(connection,wallet,targetToken,swapMarket.poolKeys, 0.1,false)
                                         // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }else{
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
                                         // await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.001,true)
-                                        await swapTokenFastestWallet(connection,wallet,swapMarket.poolKeys, 0.1,true)
+                                        await swapTokenFastestWallet(connection,wallet,targetToken,swapMarket.poolKeys, 0.1,true)
                                     }
                                 }
                             }
