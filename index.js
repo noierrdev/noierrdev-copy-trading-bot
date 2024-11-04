@@ -277,6 +277,7 @@ function connectGeyser(){
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                                 const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
+                                console.log(swapInstruction)
                                 if(swapInstruction){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
