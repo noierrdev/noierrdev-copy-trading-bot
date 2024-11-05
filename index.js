@@ -255,6 +255,8 @@ function connectGeyser(){
                             const userPostWSOLBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const WSOLBalChange=userPostWSOLBalance?(userPostWSOLBalance.uiTokenAmount.uiAmount-(userPreWSOLBalance?userPreWSOLBalance.uiTokenAmount.uiAmount:0)):(0-userPreWSOLBalance?userPreWSOLBalance.uiTokenAmount.uiAmount:0);
                             // console.log({WSOLBalChange})
+
+                            console.log(transaction.meta.preTokenBalances,transaction.meta.postTokenBalances)
                             const userPreTokenBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             // console.log({userPreTokenBalance,userPostTokenBalance});
@@ -266,6 +268,7 @@ function connectGeyser(){
                             
                             const targetToken=userPreTokenBalance?userPreTokenBalance.mint:userPostTokenBalance.mint;
                             // console.log({targetToken})
+                            
                 
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0);
                             console.log(userTokenBalanceChange)
@@ -279,7 +282,7 @@ function connectGeyser(){
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
 
-                            console.log(transaction.meta.preTokenBalances,transaction.meta.postTokenBalances)
+                            
                             // return;
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
