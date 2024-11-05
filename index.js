@@ -280,7 +280,7 @@ function connectGeyser(){
                             }
 
                             console.log(transaction.meta.preTokenBalances,transaction.meta.postTokenBalances)
-                            return;
+                            // return;
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
                                 const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
