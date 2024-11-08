@@ -333,8 +333,8 @@ function connectGeyser(){
                                 if(swapInstruction){
                                     var bondingCurve=null;
                                     var bondingCurveVault=null;
-                                    bondingCurve=swapInstruction?.accounts[3];
-                                    bondingCurveVault=swapInstruction?.accounts[4];
+                                    bondingCurve=allAccounts[swapInstruction.accounts[3]];
+                                    bondingCurveVault=allAccounts[swapInstruction.accounts[4]];
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
