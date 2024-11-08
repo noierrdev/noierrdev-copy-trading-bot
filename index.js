@@ -324,6 +324,8 @@ function connectGeyser(){
                                 }
                             }
                             else if(allAccounts.includes(PUMPFUN_BONDINGCURVE)){
+                                console.log(allAccounts);
+                                console.log(transaction?.transaction.message.instructions)
                                 const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
                                 
                                 if(swapInstruction){
