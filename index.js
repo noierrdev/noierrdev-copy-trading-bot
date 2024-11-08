@@ -259,7 +259,7 @@ function connectGeyser(){
                             console.log(transaction.meta.preTokenBalances,transaction.meta.postTokenBalances)
                             const userPreTokenBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
-                            // console.log({userPreTokenBalance,userPostTokenBalance});
+                            console.log({userPreTokenBalance,userPostTokenBalance});
 
                             if((!userPreTokenBalance)&&(!userPostTokenBalance)) {
                                 // console.log("!!!!!===NOT SWAP TX===!!!!!");
@@ -277,7 +277,7 @@ function connectGeyser(){
                                 return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
-                            if(Math.abs(userTokenBalanceChange)>50000000){
+                            if(Math.abs(userTokenBalanceChange)>30000000){
                                 return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
