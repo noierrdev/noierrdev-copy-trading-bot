@@ -346,8 +346,8 @@ function connectGeyser(){
                                         var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                                        fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
                                         logs[targetToken]=targetToken;
+                                        fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
                                         // pumpfunSellProcess(targetToken)
                                     }
                                     else {
