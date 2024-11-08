@@ -294,7 +294,7 @@ function connectGeyser(){
                             // return;
                 
                             if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
-                                const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==RAYDIUM_OPENBOOK_AMM);
+                                const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>allAccounts[instruction.programIdIndex]==RAYDIUM_OPENBOOK_AMM);
                                 console.log(swapInstruction)
                                 if(swapInstruction){
                                     if(userTokenBalanceChange>0){
@@ -328,7 +328,7 @@ function connectGeyser(){
                             else if(allAccounts.includes(PUMPFUN_BONDINGCURVE)){
                                 console.log(allAccounts);
                                 console.log(transaction?.transaction.message.instructions)
-                                const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>instruction.programId==PUMPFUN_BONDINGCURVE);
+                                const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>allAccounts[instruction.programIdIndex]==PUMPFUN_BONDINGCURVE);
                                 
                                 if(swapInstruction){
                                     var bondingCurve=null;
