@@ -16,6 +16,8 @@ if(!fs.existsSync(path.resolve(__dirname,"logs"))){
     fs.mkdirSync(path.resolve(__dirname,"logs"));
 }
 
+var logs={}
+
 var wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 setInterval(() => {
     wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
@@ -336,14 +338,16 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        if(fs.existsSync(path.resolve(__dirname,"logs",targetToken))){
-                                            return;
-                                        }
+                                        // if(fs.existsSync(path.resolve(__dirname,"logs",targetToken))){
+                                        //     return;
+                                        // }
+                                        if(logs[targetToken]) return;
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
                                         var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
+                                        logs[targetToken]=targetToken;
                                         // pumpfunSellProcess(targetToken)
                                     }
                                     else {
@@ -357,13 +361,15 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        if(fs.existsSync(path.resolve(__dirname,"logs",targetToken))){
-                                            return;
-                                        }
+                                        // if(fs.existsSync(path.resolve(__dirname,"logs",targetToken))){
+                                        //     return;
+                                        // }
+                                        if(logs[targetToken]) return;
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
                                         var result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
+                                        logs[targetToken]=targetToken;
                                         fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
                                         // pumpfunSellProcess(targetToken);
                                     }
