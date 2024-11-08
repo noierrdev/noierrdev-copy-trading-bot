@@ -342,7 +342,7 @@ function connectGeyser(){
                                         //     return;
                                         // }
                                         if(logs[targetToken]) return;
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
                                         var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
@@ -365,7 +365,7 @@ function connectGeyser(){
                                         //     return;
                                         // }
                                         if(logs[targetToken]) return;
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.15*(10**9))/(0-SOLBalanceChange)))
                                         var result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
