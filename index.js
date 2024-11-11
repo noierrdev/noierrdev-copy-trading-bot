@@ -353,9 +353,11 @@ function connectGeyser(){
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
-                                        await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false);
-                                        await swapPumpfunFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,false)
-                                        
+                                        // await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false);
+                                        // await swapPumpfunFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,false)
+                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
+                                        await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
+                                        if(logs[targetToken]) delete logs[targetToken]
                                     }
                                 }else{
                                     if(userTokenBalanceChange>0){
@@ -378,6 +380,7 @@ function connectGeyser(){
                                         console.log(`::::SELL:::::`)
                                         await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
                                         await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
+                                        if(logs[targetToken]) delete logs[targetToken]
                                         
                                     }
                                 }
