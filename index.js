@@ -281,7 +281,7 @@ function connectGeyser(){
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0));
                             console.log(userTokenBalanceChange)
                 
-                            if(Math.abs(userTokenBalanceChange)<600000){
+                            if(Math.abs(userTokenBalanceChange)<700000){
                                 return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
