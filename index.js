@@ -329,7 +329,7 @@ function connectGeyser(){
                                 // console.log(allAccounts);
                                 // console.log(transaction?.transaction.message.instructions)
                                 const swapInstruction=(transaction?.transaction.message.instructions).find(instruction =>allAccounts[instruction.programIdIndex]==PUMPFUN_BONDINGCURVE);
-                                // console.log(swapInstruction)
+                                console.log(swapInstruction)
                                 if(swapInstruction){
                                     var bondingCurve=null;
                                     var bondingCurveVault=null;
