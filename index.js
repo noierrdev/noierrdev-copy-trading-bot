@@ -343,10 +343,9 @@ function connectGeyser(){
                                         // }
                                         if(logs[targetToken]) return;
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                                        // var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                                        var result=await swapPumpfunFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true)
-                                        // if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                                        // if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        if(result!=true) result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                         logs[targetToken]=targetToken;
                                         fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
                                         // pumpfunSellProcess(targetToken)
@@ -356,8 +355,8 @@ function connectGeyser(){
                                         console.log(`::::SELL:::::`)
                                         // await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false);
                                         // await swapPumpfunFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,false)
-                                        pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
-                                        await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
+                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
+                                        pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
                                         if(logs[targetToken]) delete logs[targetToken]
                                     }
                                 }else{
@@ -369,9 +368,9 @@ function connectGeyser(){
                                         // }
                                         if(logs[targetToken]) return;
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                                        var result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true);
-                                        // if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
-                                        // if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
+                                        var result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
+                                        if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
+                                        if(result!=true) result=await pumpfunSwapTransactionFasterWalletToken(connection,wallet,targetToken,tokenToBuy,true);
                                         logs[targetToken]=targetToken;
                                         fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
                                         // pumpfunSellProcess(targetToken);
@@ -379,8 +378,8 @@ function connectGeyser(){
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
-                                        pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
-                                        await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
+                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
+                                        pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
                                         if(logs[targetToken]) delete logs[targetToken]
                                         
                                     }
