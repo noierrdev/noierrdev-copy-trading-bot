@@ -267,7 +267,7 @@ function connectGeyser(){
                             // console.log(transaction.meta.preTokenBalances,transaction.meta.postTokenBalances)
                             const userPreTokenBalance=transaction.meta.preTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
                             const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint!=SOL_MINT_ADDRESS)&&(ba.owner==signers[0])));
-                            console.log({userPreTokenBalance,userPostTokenBalance});
+                            // console.log({userPreTokenBalance,userPostTokenBalance});
 
                             if((!userPreTokenBalance)&&(!userPostTokenBalance)) {
                                 // console.log("!!!!!===NOT SWAP TX===!!!!!");
@@ -356,7 +356,7 @@ function connectGeyser(){
                                         console.log(`::::SELL:::::`)
                                         // await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false);
                                         // await swapPumpfunFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,false)
-                                        // await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
+                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
                                         await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
                                         if(logs[targetToken]) delete logs[targetToken]
                                     }
@@ -380,7 +380,7 @@ function connectGeyser(){
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
-                                        // await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
+                                        await pumpfunSwapTransactionFasterWallet(connection,wallet,targetToken,0.001,false);
                                         await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,false)
                                         if(logs[targetToken]) delete logs[targetToken]
                                         
