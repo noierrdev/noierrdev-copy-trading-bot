@@ -6707,7 +6707,7 @@ const pumpfunSwapTransactionFasterWalletStaked=async (connection,stakedConnectio
           "denominatedInSol": buy?'true':'false',
           "amount": buy?String(amount):"100%",
           "slippage": 10, 
-          "priorityFee": 0.0003, 
+          "priorityFee": 0.0006, 
           "pool": "pump"
       })
   });
