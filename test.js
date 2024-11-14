@@ -1,5 +1,5 @@
 const { Keypair, Connection } = require("@solana/web3.js");
-const { pumpfunSwapTransactionFasterWallet, pumpfunSwapTransactionFasterWalletToken, swapPumpfunFasterWallet, swapPumpfunFasterWalletStaked, pumpfunSwapTransactionFasterWalletStaked } = require("./swap");
+const { pumpfunSwapTransactionFasterWallet, pumpfunSwapTransactionFasterWalletToken, swapPumpfunFasterWallet, swapPumpfunFasterWalletStaked, pumpfunSwapTransactionFasterWalletStaked, pumpfunSwapTransactionFasterWalletTokenStaked } = require("./swap");
 
 require("dotenv").config();
 const connection=new Connection(process.env.RPC_API)
@@ -7,12 +7,12 @@ const stakedConnection=new Connection(process.env.STAKED_RPC)
 const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
 
-const targetToken="CVrL6nvTt3KS8KSQo1SrXtqdjDdDW23XDz6bEXkxpump"
-const bondingCurve="3mm3P9fC899FzM5BQrt5SQRyMZD5aeFS9ywxUDMLW4cK"
-const bondingCurveVault="5masFP6hcRRaqYp92pGkGi8zQj1WSxXZj9iVg8vP1kcT"
+const targetToken="2WwUfbtxoQdaf9W7CSs5BmSXaFBRUvMsufHC566upump"
+const bondingCurve="5P3gR9zAujZyDwyxYMa3QUfXpQAW5ZeXKJmM7aKRC2MK"
+const bondingCurveVault="2xTpNUhJdsm29CaCQWufb3kE1AiyvWiHB1J6Sc7AqL9V"
 
 setTimeout(async () => {
-    await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnection,wallet,"2WwUfbtxoQdaf9W7CSs5BmSXaFBRUvMsufHC566upump",0.001,false)
+    await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnection,wallet,targetToken,0.001,true)
     // await swapPumpfunFasterWalletStaked(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false)
     // await swapPumpfunFasterWallet(connection,wallet,targetToken,bondingCurve,bondingCurveVault,100,false)
 }, 0);
