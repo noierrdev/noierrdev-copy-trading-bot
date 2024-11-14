@@ -6494,7 +6494,8 @@ const swapPumpfunFasterWalletStaked=async (connection,stakedConnection, wallet, 
     wallet.publicKey,
   );
   
-  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 300000}));
+  // txObject.add(ComputeBudgetProgram.setComputeUnitLimit({units:300000}))
+  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 800000}));
   
   const tokenATA = getAssociatedTokenAddressSync(
     MYTOKEN_MINT_PUBKEY,
@@ -6707,7 +6708,7 @@ const pumpfunSwapTransactionFasterWalletStaked=async (connection,stakedConnectio
           "denominatedInSol": buy?'true':'false',
           "amount": buy?String(amount):"100%",
           "slippage": 10, 
-          "priorityFee": 0.0006, 
+          "priorityFee": 0.0002, 
           "pool": "pump"
       })
   });

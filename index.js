@@ -343,10 +343,10 @@ function connectGeyser(){
                                         // }
                                         if(logs[targetToken]) return;
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
-                                        // var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                                        var result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true)
-                                        if(result!=true) result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true)
-                                        if(result!=true) result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true)
+                                        var result=await swapPumpfunFasterWallet(connection, wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        // var result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true)
+                                        // if(result!=true) result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true)
+                                        // if(result!=true) result=await pumpfunSwapTransactionFasterWalletStaked(connection,stakedConnectioon,wallet,targetToken,0.1,true)
                                         logs[targetToken]=targetToken;
                                         fs.appendFileSync(path.resolve(__dirname,"logs",targetToken),"");
                                         // pumpfunSellProcess(targetToken)
