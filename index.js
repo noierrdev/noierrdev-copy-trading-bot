@@ -39,6 +39,7 @@ const MINT_CONTRACT="minTcHYRLVPubRK8nt6sqe2ZpWrGDLQoNLipDJCGocY"
 const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
 
+console.log({wallet:wallet.publicKey.toBase58()})
 // const bot = new Bot(process.env.TELEGRAM_TOKEN);
 // bot.start()
 
