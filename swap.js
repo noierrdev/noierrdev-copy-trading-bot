@@ -3179,7 +3179,7 @@ const swapPumpfunFasterWallet=async (connection, wallet, targetToken, bondingCur
     SOL_MINT_PUBKEY,
     wallet.publicKey,
   );  
-  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 40000}));
+  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 50000}));
   const tokenATA = getAssociatedTokenAddressSync(
     MYTOKEN_MINT_PUBKEY,
     wallet.publicKey,
@@ -6495,7 +6495,7 @@ const swapPumpfunFasterWalletStaked=async (connection,stakedConnection, wallet, 
   );
   
   // txObject.add(ComputeBudgetProgram.setComputeUnitLimit({units:300000}))
-  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 300000}));
+  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 500000}));
   
   const tokenATA = getAssociatedTokenAddressSync(
     MYTOKEN_MINT_PUBKEY,
