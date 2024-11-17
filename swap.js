@@ -3289,7 +3289,7 @@ const swapPumpfunFasterWallet=async (connection, wallet, targetToken, bondingCur
     "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
     "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
   ]
-  const jito_tip_amount=BigInt(Number(800000))
+  const jito_tip_amount=BigInt(Number(600000))
   var jito_tip_account=new PublicKey(jito_tip_accounts[6]);
   txObject.add(
     SystemProgram.transfer({
