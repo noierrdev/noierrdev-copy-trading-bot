@@ -7,7 +7,6 @@ const WebSocket = require('ws');
 const { pumpfunSwapTransactionFaster, swapTokenAccounts, swapPumpfunFaster, swapTokenFastest, swapTokenFastestWallet, pumpfunSwapTransactionFasterWallet, swapTokenAccountsWallet, swapPumpfunFasterWallet, pumpfunSwapTransactionFasterWalletToken, pumpfunSwapTransactionFasterWalletStaked, swapPumpfunFasterWalletStaked } = require("./swap");
 const { getAssociatedTokenAddressSync } = require("@solana/spl-token");
 
-const {Bot,Context,session}=require("grammy");
 const { getSwapMarket, getSwapMarketFaster } = require("./utils");
 const Client=require("@triton-one/yellowstone-grpc");
 const bs58=require("bs58")
@@ -40,8 +39,6 @@ const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
 
 console.log({wallet:wallet.publicKey.toBase58()})
-// const bot = new Bot(process.env.TELEGRAM_TOKEN);
-// bot.start()
 
 function connectWebsocket(){
     var ws = new WebSocket(process.env.RPC_WEBSOCKET);
@@ -123,7 +120,6 @@ function connectWebsocket(){
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
                         await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.1,false);
-                        await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }else{
                         console.log(`::::SELL::::`);
                         await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.1,true);
@@ -133,7 +129,6 @@ function connectWebsocket(){
                     if(userTokenBalanceChange>0){
                         console.log(`::::BUY:::::`)
                         await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.1,false);
-                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }else{
                         console.log(`::::SELL::::`);
                         await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.1,true)
@@ -165,7 +160,6 @@ function connectWebsocket(){
                         console.log(`::::BUY:::::`)
                         // const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                         await pumpfunSwapTransactionFasterWallet(connection, wallet,targetToken,0.1,true);
-                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Pumpfun copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                     }
                     else {
                         console.log(`::::SELL:::::`)
@@ -303,7 +297,6 @@ function connectGeyser(){
                                         console.log(`::::BUY:::::`)
                                         // await swapTokenAccounts(connection,targetToken,swapInstruction.accounts,0.001,false);
                                         await swapTokenAccountsWallet(connection,wallet,targetToken,swapInstruction.accounts,0.1,false);
-                                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }else{
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
@@ -317,7 +310,6 @@ function connectGeyser(){
                                         console.log(`::::BUY:::::`)
                                         // await swapTokenFastest(connection,targetToken,swapMarket.poolKeys,0.001,false);
                                         await swapTokenFastestWallet(connection,wallet,targetToken,swapMarket.poolKeys, 0.1,false)
-                                        // await bot.api.sendMessage(`noierrdevcopytrading_channel`,`<b>Raydium copied!</b>\n<code>${signers[0]}</code>\n<a href="https://solscan.io/tx/${signature}" >Photon</a>`,{parse_mode:"HTML",link_preview_options:{is_disabled:true}})
                                     }else{
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
