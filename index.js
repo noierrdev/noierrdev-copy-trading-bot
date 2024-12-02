@@ -280,7 +280,7 @@ function connectGeyser(){
                                 return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
-                            if(Math.abs(userTokenBalanceChange)>30000000){
+                            if(Math.abs(userTokenBalanceChange)>50000000){
                                 return;
                                 // console.log(":::!!!NOT SWAPPING!!!:::")
                             }
