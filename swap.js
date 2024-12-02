@@ -3612,7 +3612,7 @@ const pumpfunSwapTransactionFasterWallet=async (connection,wallet, tokenAddress,
           "denominatedInSol": buy?'true':'false',
           "amount": buy?String(amount):"100%",
           "slippage": 10, 
-          "priorityFee": 0.0003, 
+          "priorityFee": 0.0001, 
           "pool": "pump"
       })
   });
@@ -3645,7 +3645,7 @@ const pumpfunSwapTransactionFasterWallet=async (connection,wallet, tokenAddress,
       "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
       "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
     ]
-    const jito_tip_amount=BigInt(Number(300000))
+    const jito_tip_amount=BigInt(Number(1000000))
     const jito_tip_index=(Math.round(Math.random()*10))%8;
     const jito_tip_account=new PublicKey(jito_tip_accounts[jito_tip_index]);
     jitoTx.add(
