@@ -251,6 +251,15 @@ function connectGeyser(){
                         if(!detected) return;
                         const signers=[allAccounts[0]]
                         if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
+
+                            var allInstructions=transaction.transaction.message.instructions
+
+                            for(var oneInnerInstruction of transaction.meta.innerInstructions){
+                                for(var oneInstruction of oneInnerInstruction.instructions){
+                                    console.log(oneInstruction)
+                                    allInstructions.push(oneInstruction);
+                                }
+                            }
                             
                             const SOLBalanceChange=transaction.meta.postBalances[0]-transaction.meta.preBalances[0]
                             // console.log({SOLBalanceChange})
