@@ -250,7 +250,7 @@ function connectGeyser(){
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
-                                        console.log(`${userTokenBalanceChangePercent.toFixed(2)}%`)
+                                        console.log(`${userTokenBalanceChangePercent.toFixed(2)}% SOLD`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
                                             // await swapPumpfunWalletTokenFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
                                         }
