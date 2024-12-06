@@ -8,30 +8,31 @@ const stakedConnection=new Connection(process.env.STAKED_RPC)
 const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
 
-const targetToken="3q9ww3C9AP2Jrq5JcS38oRDAqjrehZo3HXehThjupump"
+const targetToken="9UYk5YXrvdLTgsdCgyaazcC9RaX8zBnipWWCpwrowSFx"
 const bondingCurve="5P3gR9zAujZyDwyxYMa3QUfXpQAW5ZeXKJmM7aKRC2MK"
 const bondingCurveVault="2xTpNUhJdsm29CaCQWufb3kE1AiyvWiHB1J6Sc7AqL9V"
 
 const swapAccounts=[
     'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
-    '6XJGsowXsVwwUX5C8SJDPiQaBMhhu1rKGqVvk1fo75LF',
+    'AThyA5TtVh9db1JrfSPzcKo5MgEhC9F9qz4qCZn9UqeW',
     '5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1',
-    'CJJMzzuHGD9Jd8JezzoD71TqWvQesBD1UfMgTkH3o5wX',
-    '9NJyDLp77ymAfLJE5XRqg6gFz3nzuV2AxnuAeKKAF9Am',
-    'D5UivoWz2AfRVjTNDxqpyChByZ88zfNbFgxir14b99U2',
-    'C4MjLN4AuyinS5iBZbEVRKYgCWoxJYr6GGb1oM9JPKDn',
+    '7ArCGa3T8LJrHA9p97MbTTxggtFgWt74BiX83i43VFGF',
+    '7UH9NVCMg983WFDwgr6noXz6927LRzZS8L5pKeHoccEj',
+    'Hb4qeWdG5682fQmnsNqSXPNNJjRUWhW3eaEjshF2GBiP',
+    '97FwinAgF2uRBx9qCrFaii7rekE6RRvZ824TGbtXLbEB',
     'srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX',
-    '66W6gXrcp6G21QXf5QSQAgwtkZvB3aNzB4Xcy9wCJMwp',
-    '6vuZdUp8NqiBhbg5qgA815TT1VWuWBGZtbqnshFtr6ku',
-    'ELEsiH6jjvMUefPbU9y8UNC63M8bCbQwR1fx9QFZh8Vk',
-    'HrwcVPHzAQGuagS81JFX7ToEUwkcAenzc11XstmUsbNn',
-    'ENLJTUyY35wdnWcDMj95FrV4u9Mae99t9TMWS3JfzYDF',
-    '2ZziidB4Xb7x73EhMeSj8amF7de99KwJZ6SrGs5Jyiig',
-    'B7np8tyqeE3vsNmMiWDnGSTQPHPeDrqqMTpSCxW5xhrS',
-    'B7Hsk4qRWGcBRNSi9MRUtHyqf3U7uhswQN6afGE8kG8T',
+    'FL3vhMrYK9CpbaKGPfBAjeUqESRKevfA85k1bhi8Q5T4',
+    'ATs893NSapYD8mBcXet6CouYLRumFvH8iSUQkwbbXAfs',
+    'BMExySinZKhox2CdUcrw4KBQxiL1ekPtKfb9FE11jfFY',
+    '2tCCawzwcWPDetWR2zt8oEJ8AeKcQnPZahjd2FcvKhxv',
+    'E9LNNj7ZC2Bs38UvLUWfXNWxaBMqkFPuw4SQHeGMMXJe',
+    '9MHDxuM3yw9NR3ELZDoo3Ybs33wV8aSxRfQaSwzaqXw3',
+    '6mPRNMKcVMBp6xVFQSigWmvxZ8HAGpCWPALCLBJ6yqo9',
     'GGA4Eme5cHsTBEfg5mg3igMWMquF2WAwXtGVaFYtRGkb',
+    '9qJSGD6Zku66EsBkfQrXi8mp4pTtHLXxsf7PgkBfQc9T',
     '5iywveQKkidqPDKt2CExJcWKex2EXz9kbGcYiZvhuXWs'
   ]
+  
   
 
 setTimeout(async () => {
