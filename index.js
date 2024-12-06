@@ -14,7 +14,7 @@ const bs58=require("bs58")
 
 
 const connection=new Connection(process.env.RPC_API);
-const stakedConnectioon=new Connection(process.env.STAKED_RPC)
+const stakedConnection=new Connection(process.env.STAKED_RPC)
 
 const PUMPFUN_RAYDIUM_MIGRATION="39azUYFWPz3VHgKCf3VChUwbpURdCHRxjWVowf5jUJjg"
 const RAYDIUM_OPENBOOK_AMM="675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8"
