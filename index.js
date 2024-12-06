@@ -208,10 +208,10 @@ function connectGeyser(){
                                         console.log(`::::SELL::::`);
                                         console.log(`${userTokenBalanceChangePercent.toFixed(2)}% SOLD!`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
-                                            await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),true)
+                                            // await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),true)
                                         }
                                         else {
-                                            await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,allTrades[targetToken].amount,true)
+                                            // await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,allTrades[targetToken].amount,true)
                                         }
                                     }
                                 }
@@ -250,10 +250,10 @@ function connectGeyser(){
                                         console.log(`::::SELL:::::`)
                                         console.log(`${userTokenBalanceChangePercent.toFixed(2)}%`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
-                                            await swapPumpfunWalletTokenFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
+                                            // await swapPumpfunWalletTokenFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
                                         }
                                         else {
-                                            await swapPumpfunWalletFastestPercent(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
+                                            // await swapPumpfunWalletFastestPercent(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
                                         }
                                     }
                                 }
