@@ -150,15 +150,34 @@ function connectGeyser(){
 
                             //Logging my buy trades -  That will decrease time latency when sell!
                             if((signers[0]==wallet.publicKey.toBase58())){
-                                if(allAccounts.includes(PUMPFUN_BONDINGCURVE)&&(transaction.meta.logMessages.includes("Program log: Instruction: Buy"))){
-                                    // MY PUMPFUN BUY
-                                    const swapInstruction=transaction.transaction.message.instructions.find(instruction=>allAccounts[instruction.programIdIndex]==PUMPFUN_BONDINGCURVE);
-                                    if(!swapInstruction) return;
-                                    const targetToken=allAccounts[swapInstruction.accounts[2]];
-                                    const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==targetToken)&&(ba.owner==wallet.publicKey.toBase58())));
-                                    allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount;
-                                }else if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)&&userTokenBalanceChange>0){
-                                    // MY RAYDIUM BUY
+                                if(allAccounts.includes(PUMPFUN_BONDINGCURVE)){
+                                    if(userTokenBalanceChange>0){
+                                        // MY PUMPFUN BUY
+                                        const swapInstruction=transaction.transaction.message.instructions.find(instruction=>allAccounts[instruction.programIdIndex]==PUMPFUN_BONDINGCURVE);
+                                        if(!swapInstruction) return;
+                                        const targetToken=allAccounts[swapInstruction.accounts[2]];
+                                        const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==targetToken)&&(ba.owner==wallet.publicKey.toBase58())));
+                                        allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount;
+                                    }else if(userTokenBalanceChange<0){
+                                        // MY PUMPFUN SELL
+                                        if((!userPostTokenBalance)&&(allTrades[targetToken])) delete allTrades[targetToken];
+                                        if(userPostTokenBalance) allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount; 
+                                    }
+                                    
+                                }else if(allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
+                                    
+                                    if(userTokenBalanceChange>0){
+                                        // MY RAYDIUM BUY
+                                        const swapInstruction=transaction.transaction.message.instructions.find(instruction=>allAccounts[instruction.programIdIndex]==PUMPFUN_BONDINGCURVE);
+                                        if(!swapInstruction) return;
+                                        const targetToken=allAccounts[swapInstruction.accounts[2]];
+                                        const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==targetToken)&&(ba.owner==wallet.publicKey.toBase58())));
+                                        allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount;
+                                    }else if(userTokenBalanceChange<0){
+                                        // MY RAYDIUM SELL
+                                        if((!userPostTokenBalance)&&(allTrades[targetToken])) delete allTrades[targetToken];
+                                        if(userPostTokenBalance) allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount; 
+                                    }
                                 }
                                 
                             }
@@ -187,7 +206,6 @@ function connectGeyser(){
                                         }
                                         else {
                                             await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,allTrades[targetToken].amount,true)
-                                            if(allTrades[targetToken]) delete allTrades[targetToken]
                                         }
                                     }
                                 }
@@ -221,8 +239,6 @@ function connectGeyser(){
                                         if(SOLBalanceChange>-0.5) return;
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.2*(10**9))/(0-SOLBalanceChange)))
                                         await swapPumpfunWalletFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
-                                        var buyTime=new Date();
-                                        allTrades[targetToken]={buy:buyTime.getTime()}
                                     }
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
@@ -233,7 +249,6 @@ function connectGeyser(){
                                         }
                                         else {
                                             await swapPumpfunWalletFastestPercent(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
-                                            if(allTrades[targetToken]) delete allTrades[targetToken]
                                         }
                                     }
                                 }
