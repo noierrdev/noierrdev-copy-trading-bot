@@ -168,7 +168,7 @@ function connectGeyser(){
                                     
                                     if(userTokenBalanceChange>0){
                                         // MY RAYDIUM BUY
-                                        const swapInstruction=transaction.transaction.message.instructions.find(instruction=>allAccounts[instruction.programIdIndex]==PUMPFUN_BONDINGCURVE);
+                                        const swapInstruction=transaction.transaction.message.instructions.find(instruction=>allAccounts[instruction.programIdIndex]==RAYDIUM_OPENBOOK_AMM);
                                         if(!swapInstruction) return;
                                         const targetToken=allAccounts[swapInstruction.accounts[2]];
                                         const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==targetToken)&&(ba.owner==wallet.publicKey.toBase58())));
@@ -179,6 +179,8 @@ function connectGeyser(){
                                         if(userPostTokenBalance) allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount; 
                                     }
                                 }
+                                //Please return, if not, I may copy my trades :D
+                                return;
                                 
                             }
                 
@@ -189,10 +191,12 @@ function connectGeyser(){
 
                                 //if swap instruction is existing
                                 if(swapInstruction){
+                                    //collect accounts of swap instruction
                                     var swapAccounts=[]
                                     for(var oneAccount of swapInstruction.accounts){
                                         swapAccounts.push(allAccounts[oneAccount])
                                     }
+
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
@@ -200,7 +204,7 @@ function connectGeyser(){
                                     }else{
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
-                                        console.log(`${userTokenBalanceChangePercent.toFixed(2)}%`)
+                                        console.log(`${userTokenBalanceChangePercent.toFixed(2)}% SOLD!`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
                                             await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),true)
                                         }
@@ -236,8 +240,7 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        if(SOLBalanceChange>-0.5) return;
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.2*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.1*(10**9))/(0-SOLBalanceChange)))
                                         await swapPumpfunWalletFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                     }
                                     else {
