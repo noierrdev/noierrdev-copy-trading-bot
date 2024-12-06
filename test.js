@@ -36,5 +36,5 @@ const swapAccounts=[
   
 
 setTimeout(async () => {
-    await swapTokenAccountsWalletFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,0.001,true)
+    await swapTokenAccountsWalletFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,0.0001,false)
 }, 0);
