@@ -145,7 +145,7 @@ function connectGeyser(){
                             //token balance change
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0));
                 
-                            if(userTokenBalanceChange>0&&userTokenBalanceChange<1000000){
+                            if((userTokenBalanceChange>0)&&(userTokenBalanceChange<1000000)){
                                 return
                             }
                             if(userTokenBalanceChange>20000000){
