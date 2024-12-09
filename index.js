@@ -158,6 +158,7 @@ function connectGeyser(){
                                         if(!swapInstruction) return;
                                         const targetToken=allAccounts[swapInstruction.accounts[2]];
                                         const userPostTokenBalance=transaction.meta.postTokenBalances.find(ba=>((ba.mint==targetToken)&&(ba.owner==wallet.publicKey.toBase58())));
+                                        if(!allTrades[targetToken]) allTrades[targetToken]={}
                                         allTrades[targetToken].amount=userPostTokenBalance.uiTokenAmount.uiAmount;
                                     }else if(userTokenBalanceChange<0){
                                         // MY PUMPFUN SELL
