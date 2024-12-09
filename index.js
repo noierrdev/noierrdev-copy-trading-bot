@@ -203,16 +203,16 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        await swapTokenAccountsWalletFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,0.001,false);
+                                        await swapTokenAccountsWalletFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,0.001,false);
                                     }else{
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
                                         console.log(`${userTokenBalanceChangePercent.toFixed(2)}% SOLD!`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
-                                            await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),true)
+                                            await swapTokenAccountsWalletTokenFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),true)
                                         }
                                         else {
-                                            await swapTokenAccountsWalletTokenFaster(connection,stakedConnectioon,wallet,targetToken,swapAccounts,allTrades[targetToken].amount,true)
+                                            await swapTokenAccountsWalletTokenFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,allTrades[targetToken].amount,true)
                                         }
                                     }
                                 }
@@ -245,17 +245,17 @@ function connectGeyser(){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
                                         const tokenToBuy=Math.floor(userTokenBalanceChange*((0.001*(10**9))/(0-SOLBalanceChange)))
-                                        await swapPumpfunWalletFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
+                                        await swapPumpfunWalletFastest(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                     }
                                     else {
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL:::::`)
                                         console.log(`${userTokenBalanceChangePercent.toFixed(2)}% SOLD`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
-                                            // await swapPumpfunWalletTokenFastest(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
+                                            // await swapPumpfunWalletTokenFastest(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
                                         }
                                         else {
-                                            // await swapPumpfunWalletFastestPercent(connection,stakedConnectioon,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
+                                            // await swapPumpfunWalletFastestPercent(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
                                         }
                                     }
                                 }
