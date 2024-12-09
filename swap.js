@@ -7921,7 +7921,7 @@ const swapPumpfunWalletFastestPercent=async (connection, stakedConnection, walle
     SOL_MINT_PUBKEY,
     wallet.publicKey,
   );  
-  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 2000000}));
+  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 500000}));
   const tokenATA = getAssociatedTokenAddressSync(
     MYTOKEN_MINT_PUBKEY,
     wallet.publicKey,
@@ -8033,7 +8033,7 @@ const swapPumpfunWalletFastestPercent=async (connection, stakedConnection, walle
     "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
     "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
   ]
-  const jito_tip_amount=BigInt(Number(2000000))
+  const jito_tip_amount=BigInt(Number(500000))
   var jito_tip_account=new PublicKey(jito_tip_accounts[6]);
   jitoTxObj.add(
     SystemProgram.transfer({
@@ -8128,7 +8128,7 @@ const swapPumpfunWalletTokenFastest=async (connection, stakedConnection, wallet,
     SOL_MINT_PUBKEY,
     wallet.publicKey,
   );  
-  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 2000000}));
+  txObject.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 500000}));
   const tokenATA = getAssociatedTokenAddressSync(
     MYTOKEN_MINT_PUBKEY,
     wallet.publicKey,
@@ -8240,7 +8240,7 @@ const swapPumpfunWalletTokenFastest=async (connection, stakedConnection, wallet,
     "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
     "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
   ]
-  const jito_tip_amount=BigInt(Number(2000000))
+  const jito_tip_amount=BigInt(Number(500000))
   var jito_tip_account=new PublicKey(jito_tip_accounts[6]);
   jitoTxObj.add(
     SystemProgram.transfer({
