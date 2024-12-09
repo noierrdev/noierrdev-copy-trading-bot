@@ -7180,7 +7180,7 @@ const swapPumpfunHidden=async (connection, wallet, newWallet, targetToken, bondi
     }
   
     const solAmountbuffer = Buffer.alloc(8);
-    solAmountbuffer.writeBigInt64LE(BigInt(10000000000),0);
+    solAmountbuffer.writeBigInt64LE(BigInt(900000000),0);
     // console.log(amountbuffer.toString("hex"))
   
     
@@ -7951,7 +7951,7 @@ const swapPumpfunWalletFastestPercent=async (connection, stakedConnection, walle
   }
 
   const solAmountbuffer = Buffer.alloc(8);
-  solAmountbuffer.writeBigInt64LE(BigInt(10000000000),0);
+  solAmountbuffer.writeBigInt64LE(BigInt(900000000),0);
   // console.log(amountbuffer.toString("hex"))
 
   
@@ -8158,7 +8158,7 @@ const swapPumpfunWalletTokenFastest=async (connection, stakedConnection, wallet,
   // }
 
   const solAmountbuffer = Buffer.alloc(8);
-  solAmountbuffer.writeBigInt64LE(BigInt(10000000000),0);
+  solAmountbuffer.writeBigInt64LE(BigInt(900000000),0);
   // console.log(amountbuffer.toString("hex"))
 
   
