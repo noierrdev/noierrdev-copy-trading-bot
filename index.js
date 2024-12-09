@@ -43,6 +43,9 @@ if(!fs.existsSync(path.resolve(__dirname,"wallets"))){
 var wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
 console.log({wallets})
 
+setInterval(() => {
+    wallets=fs.readdirSync(path.resolve(__dirname,"wallets"));
+}, 1000);
 
 var logs=fs.readdirSync(path.resolve(__dirname,"logs"));
 
