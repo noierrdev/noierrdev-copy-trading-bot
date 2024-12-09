@@ -255,10 +255,10 @@ function connectGeyser(){
                                         console.log(`::::SELL:::::`)
                                         console.log(`${userTokenBalanceChangePercent.toFixed(2)}% SOLD`)
                                         if(allTrades[targetToken]&&allTrades[targetToken].amount){
-                                            // await swapPumpfunWalletTokenFastest(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
+                                            await swapPumpfunWalletTokenFastest(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,Math.abs(Math.floor(Number(allTrades[targetToken].amount)*userTokenBalanceChangePercent/100)),false)
                                         }
                                         else {
-                                            // await swapPumpfunWalletFastestPercent(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
+                                            await swapPumpfunWalletFastestPercent(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,0.1,userTokenBalanceChangePercent,false)
                                         }
                                     }
                                 }
