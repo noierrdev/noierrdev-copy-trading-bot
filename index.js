@@ -145,6 +145,7 @@ function connectGeyser(){
                             //token balance change
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0));
                 
+                            // that is filter for safety, some traders are doing anti-copying treatments
                             if((userTokenBalanceChange>0)&&(userTokenBalanceChange<1000000)){
                                 return
                             }
