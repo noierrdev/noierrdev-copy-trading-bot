@@ -146,9 +146,11 @@ function connectGeyser(){
                             const userTokenBalanceChange=userPostTokenBalance?(userPostTokenBalance.uiTokenAmount.uiAmount-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0)):(0-(userPreTokenBalance?userPreTokenBalance.uiTokenAmount.uiAmount:0));
                 
                             // that is filter for safety, some traders are doing anti-copying treatments
+                            //If wallet buys too small, don't copy
                             if((userTokenBalanceChange>0)&&(userTokenBalanceChange<1000000)){
                                 return
                             }
+                            //If wallets buys too big, also don't copy
                             if(userTokenBalanceChange>20000000){
                                 return
                             } 
