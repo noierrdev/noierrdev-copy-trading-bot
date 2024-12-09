@@ -54,7 +54,7 @@ var allTrades={
 //This functions is invoked recursively when grpc connection is closed or crashed.
 //So that we dont have to restart bot when grpc is crashed...
 function connectGeyser(){
-    const client =new Client.default("http://127.0.0.1:10000/","xToken",undefined);
+    const client =new Client.default("http://127.0.0.1:10000/","",undefined);
     client.getVersion()
     .then(async version=>{
         try {
