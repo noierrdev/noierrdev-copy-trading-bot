@@ -151,13 +151,13 @@ function connectGeyser(){
                 
                             // that is filter for safety, some traders are doing anti-copying treatments
                             //If wallet buys too small, don't copy
-                            if((userTokenBalanceChange>0)&&(userTokenBalanceChange<1000000)){
-                                return
-                            }
-                            //If wallets buys too big, also don't copy
-                            if(userTokenBalanceChange>20000000){
-                                return
-                            } 
+                            // if((userTokenBalanceChange>0)&&(userTokenBalanceChange<1000000)){
+                            //     return
+                            // }
+                            // //If wallets buys too big, also don't copy
+                            // if(userTokenBalanceChange>20000000){
+                            //     return
+                            // } 
                             var userTokenBalanceChangePercent=0;
                             if(!userPostTokenBalance) userTokenBalanceChangePercent=100;
                             else if(userTokenBalanceChange<0) userTokenBalanceChangePercent=(100*userTokenBalanceChange/userPreTokenBalance.uiTokenAmount.uiAmount);
