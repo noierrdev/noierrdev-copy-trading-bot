@@ -24,6 +24,7 @@ const RAYDIUM_AUTHORITY="5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1";
 //Some on-chain swap programs
 const BSD_CONTRACT="BSfD6SHZigAfDWSjzD5Q41jw8LmKwtmjskPH9XW1mrRW"
 const MINT_CONTRACT="minTcHYRLVPubRK8nt6sqe2ZpWrGDLQoNLipDJCGocY"
+const BLOOM_CONTRACT="b1oomGGqPKGD6errbyfbVMBuzSC8WtAAYo8MwNafWW1"
 
 const PRIVATE_KEY =new  Uint8Array(JSON.parse(process.env.PRIVATE_KEY));
 const wallet = Keypair.fromSecretKey(PRIVATE_KEY);
@@ -70,7 +71,7 @@ function connectGeyser(){
                         vote: false,
                         failed: false,
                         signature: undefined,
-                        accountInclude: [PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM, BSD_CONTRACT, MINT_CONTRACT],
+                        accountInclude: [PUMPFUN_BONDINGCURVE, RAYDIUM_OPENBOOK_AMM, BSD_CONTRACT, MINT_CONTRACT, BLOOM_CONTRACT],
                         accountExclude: [],
                         accountRequired: [],
                     },
