@@ -217,7 +217,7 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        await swapTokenAccountsWalletFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,0.001,false);
+                                        await swapTokenAccountsWalletFaster(connection,stakedConnection,wallet,targetToken,swapAccounts,0.4,false);
                                     }else{
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::SELL::::`);
