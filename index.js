@@ -115,7 +115,7 @@ function connectGeyser(){
                         const signers=[allAccounts[0]]//signer's wallet
 
                         //filter out txs from only Raydium and Pumpfun
-                        if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)){
+                        if(allAccounts.includes(PUMPFUN_BONDINGCURVE)||allAccounts.includes(RAYDIUM_OPENBOOK_AMM)||allAccounts.includes(BSD_CONTRACT)||allAccounts.includes(MINT_CONTRACT)||allAccounts.includes(BLOOM_CONTRACT)){
                             
 
                             //collecting all instructions even inner instructions, that is helpful, if wallet uses on-chain program for swap.
