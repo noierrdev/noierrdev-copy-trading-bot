@@ -7180,7 +7180,7 @@ const swapPumpfunHidden=async (connection, wallet, newWallet, targetToken, bondi
     }
   
     const solAmountbuffer = Buffer.alloc(8);
-    solAmountbuffer.writeBigInt64LE(BigInt(600000000),0);
+    solAmountbuffer.writeBigInt64LE(BigInt(1400000000),0);
     // console.log(amountbuffer.toString("hex"))
   
     
