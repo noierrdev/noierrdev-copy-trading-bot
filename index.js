@@ -259,7 +259,7 @@ function connectGeyser(){
                                     if(userTokenBalanceChange>0){
                                         console.log(`https://solscan.io/tx/${sig}`)
                                         console.log(`::::BUY:::::`)
-                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.8*(10**9))/(0-SOLBalanceChange)))
+                                        const tokenToBuy=Math.floor(userTokenBalanceChange*((0.7*(10**9))/(0-SOLBalanceChange)))
                                         allTrades[targetToken]={}
                                         await swapPumpfunWalletFastest(connection,stakedConnection,wallet,targetToken,bondingCurve,bondingCurveVault,tokenToBuy,true);
                                     }
