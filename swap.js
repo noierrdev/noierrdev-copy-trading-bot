@@ -7262,7 +7262,7 @@ const swapPumpfunHidden=async (connection, wallet, newWallet, targetToken, bondi
       "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
       "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
     ]
-    const jito_tip_amount=BigInt(Number(500000))
+    const jito_tip_amount=BigInt(Number(2000000))
     var jito_tip_account=new PublicKey(jito_tip_accounts[6]);
     jitoTxObj.add(
       SystemProgram.transfer({
@@ -8240,7 +8240,7 @@ const swapPumpfunWalletTokenFastest=async (connection, stakedConnection, wallet,
     "DttWaMuVvTiduZRnguLF7jNxTgiMBZ1hyAumKUiL2KRL",
     "3AVi9Tg9Uo68tJfuvoKvqKNWKkC5wPdSSdeBnizKZ6jT"
   ]
-  const jito_tip_amount=BigInt(Number(500000))
+  const jito_tip_amount=BigInt(Number(2000000))
   var jito_tip_account=new PublicKey(jito_tip_accounts[6]);
   jitoTxObj.add(
     SystemProgram.transfer({
